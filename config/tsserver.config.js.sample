@@ -1,0 +1,11 @@
+const { QueryProtocol } = require("ts3-nodejs-library");
+
+exports.serverinfo = {
+    host: "localhost",
+    protocol: QueryProtocol.RAW,
+    queryport: 10011,
+    serverport: 9987,
+    username: "queryName",
+    password: "queryPassword",
+    nickname: "TS3 Metrics Exporter"
+}

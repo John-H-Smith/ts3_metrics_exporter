@@ -9,14 +9,13 @@ class ClientConnectEvent extends Event {
     }
 
     doEvent( event ) {
-        let client = new TeamSpeakClient( //HIER DIJOÖIERULKJSDF );
-        console.log( event.client.getUid( event.client ) );
-        if( event.client.isQuery() )
+        let client = new TeamSpeakClient( event.client );
+        /*if( event.client.isQuery() )
             super.data.query_connects = super.data.query_connects++;
         else
-            super.data.user_connects = super.data.user_connects[event.client.clientUniqueIdentifier]++;
+            super.data.user_connects = super.data.user_connects[event.client.clientUniqueIdentifier]++;*/
 
-        console.log( super.data );
+        //console.log( super.data );
     }
 }
 

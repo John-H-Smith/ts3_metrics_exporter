@@ -7,6 +7,7 @@ const app = express();
 const TeamspeakConnection = require( "./models/TeamspeakConnection" );
 const ClientConnectEvent = require( "./models/ClientConnectEvent" );
 const EventManager = require( "./services/EventManager" );
+const DataSaveService = require( "./services/DataSaveService" );
 
 let connection = null;
 
@@ -28,6 +29,9 @@ app.get( '/metrics', (req, res) => {
         console.error( "Verbindung fehlgeschlagen!" );
         process.exit( 0 );   
     }
+
+    DataSaveService.loadData().then( console.log );
+
 
     // event registering
     EventManager.addEvent( new ClientConnectEvent( connection ) );
