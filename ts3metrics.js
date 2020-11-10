@@ -29,26 +29,19 @@ app.get( '/metrics', (req, res) => {
         if( config.debug )
             console.error( error );
         console.error( "Failed to establish connection!" );
-        process.exit( 0 );   
+        save_quit();  
     }
 
     try {
-        DataSaveService.loadData();
+        fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
     } catch( error ) {
-        console.error( error );
+        console.log( "No DataSavings.json found - creating..." );
+        fs.writeFileSync( 'DataSavings.json', '{}' );
     }
-
-    console.log( DataSaveService.getData() );
-    DataSaveService.data.test = true;
-    console.log( DataSaveService.getData() );
-
-    ww = DataSaveService.getData();
 
     // event registering
     EventManager.addEvent( new ClientConnectEvent( connection ) );
     //let cce = ;
-
-    
 
 })();
 
@@ -58,15 +51,13 @@ console.log( "Listening on port 2232" );
 
 /*  On Shutdown */
 process.on( "SIGINT", () => {
-    console.log( ww );
-    console.log( DataSaveService.data );
-    if( connection != null )
-        connection.quit();
-
-    //DataSaveService.saveData();
-    console.log( "Connection closed!" );
-    process.exit( 0 );
+    save_quit();
 });
 
-
+function save_quit() {
+    if( connection != null )
+        connection.quit();
+    console.log( "Connection closed!" );
+    process.exit( 0 );
+}
 
