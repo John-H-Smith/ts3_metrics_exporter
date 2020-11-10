@@ -7,11 +7,13 @@ const app = express();
 const TeamspeakConnection = require( "./models/TeamspeakConnection" );
 const ClientConnectEvent = require( "./models/ClientConnectEvent" );
 const EventManager = require( "./services/EventManager" );
-const DataSaveService = require( "./services/DataSaveService" );
+let DataSaveService = require( "./services/DataSaveService" );
 
 let connection = null;
 
+const fs = require( "fs" );
 
+let ww = null;
 
 
 app.get( '/metrics', (req, res) => {
@@ -22,16 +24,25 @@ app.get( '/metrics', (req, res) => {
 
     try {
         connection = await TeamspeakConnection.getConnection();
-        console.log( "Verbindung aufgebaut!" );
+        console.log( "Connection established!" );
     } catch( error ) {
         if( config.debug )
             console.error( error );
-        console.error( "Verbindung fehlgeschlagen!" );
+        console.error( "Failed to establish connection!" );
         process.exit( 0 );   
     }
 
-    DataSaveService.loadData().then( console.log );
+    try {
+        DataSaveService.loadData();
+    } catch( error ) {
+        console.error( error );
+    }
 
+    console.log( DataSaveService.getData() );
+    DataSaveService.data.test = true;
+    console.log( DataSaveService.getData() );
+
+    ww = DataSaveService.getData();
 
     // event registering
     EventManager.addEvent( new ClientConnectEvent( connection ) );
@@ -42,14 +53,18 @@ app.get( '/metrics', (req, res) => {
 })();
 
 app.listen( 2232 );
-console.log( "Höre auf Port 2232" );
+console.log( "Listening on port 2232" );
 
 
 /*  On Shutdown */
 process.on( "SIGINT", () => {
+    console.log( ww );
+    console.log( DataSaveService.data );
     if( connection != null )
         connection.quit();
-    console.log( "Verbindung getrennt!" );
+
+    //DataSaveService.saveData();
+    console.log( "Connection closed!" );
     process.exit( 0 );
 });
 

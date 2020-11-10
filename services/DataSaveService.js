@@ -4,8 +4,10 @@ class DataSaveService {
 
     static data = {};
 
-    static async saveData() {
-        fs.writeFile( 'DataSavings.txt', data );
+    static saveData() {
+        console.log( "saved: ", this.getData() );
+        fs.writeFileSync( 'DataSavings.json', JSON.stringify( this.getData() ) );
+        //fs.writeFileSync( 'DataSavings.json', "hallo test" );
     }
 
     static getData() {
@@ -13,11 +15,22 @@ class DataSaveService {
     }
 
     static async loadData() {
-        fs.readFile( "DataSavings.txt", ( err, data ) => {
-            if( err )
-                throw err;
+        fs.readFile( "DataSavings.json", 'utf8', ( err, data ) => {
+            if( err ) {
+                if( err.errno === -4058 )
+                    fs.writeFile( 'DataSavings.json', '', ( error, data2 ) => {
+                        if( error )
+                            throw error;
+                        else
+                            console.log( "DataSavings.json created!" );
+                    } );
+                else
+                    throw err;
+            }
             this.data = data;
         });
+        //this.data = fs.readFileSync( "DataSavings.json" );
+        //this.data = fs.readFileSync( "DataSavings.json", {encoding:'utf8', flag:'r'} );
     }
 
 }

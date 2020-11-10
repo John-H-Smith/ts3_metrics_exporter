@@ -86,3 +86,4 @@ dist
 .tern-port
 
 config/tsserver.config.js
+DataSavings.json
