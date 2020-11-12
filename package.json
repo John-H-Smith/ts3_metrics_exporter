@@ -1,0 +1,16 @@
+{
+  "name": "nodets3metrics",
+  "version": "1.0.0",
+  "description": "A ts3 node metrics module for prometheus",
+  "main": "ts3metrics.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ts3-nodejs-library": "^3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
