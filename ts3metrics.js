@@ -6,8 +6,7 @@ const app = express();
 
 const TeamspeakConnection = require( "./models/TeamspeakConnection" );
 const ClientConnectEvent = require( "./models/ClientConnectEvent" );
-const EventManager = require( "./services/EventManager" );
-let DataSaveService = require( "./services/DataSaveService" );
+const EventManager = require( './services/EventManager' );
 
 let connection = null;
 
@@ -15,10 +14,10 @@ const fs = require( "fs" );
 
 let ww = null;
 
+/*  Routing of metrics  */
+app.use( '/metrics', require( './routes/metrics' ) );
 
-app.get( '/metrics', (req, res) => {
-    res.status( 200 ).send( "Erfolg" );
-} );
+
 
 ( async () => {
 
@@ -33,7 +32,9 @@ app.get( '/metrics', (req, res) => {
     }
 
     try {
-        fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
+        let file = fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
+        if( file == "" )
+            fs.writeFileSync( 'DataSavings.json', '{}' );
     } catch( error ) {
         console.log( "No DataSavings.json found - creating..." );
         fs.writeFileSync( 'DataSavings.json', '{}' );

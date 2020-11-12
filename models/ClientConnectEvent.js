@@ -15,21 +15,26 @@ class ClientConnectEvent extends Event {
         content = JSON.parse( content );
         /*  Query connects  */
         if( event.client.isQuery() ) {
-            if( content.query_connects == null )
-                content.query_connects = 1;
-            else
-                content.query_connects += 1;
+            if( content.query_connections_total == null )
+                content.query_connections_total = 0;
+            content.query_connections_total += 1;
         }
         else {
-            if( content.user_connects == null )
-                content.user_connects = {};
-                content.query_connects = 1;
-            //else
-            //    content.query_connects += 1;
+            if( content.users == null )
+                content.users = [];
+
+            let user = content.users.find( e => e.uid == client.parent.propcache.clientUniqueIdentifier );
+            if( user == null ) {
+                let newUser = {
+                    uid: client.parent.propcache.clientUniqueIdentifier,
+                    connections: 0,
+                    name: client.parent.propcache.clientNickname
+                };
+                content.users.push( newUser );
+            }
+            user.connections += 1;
         }
-        console.log( content );
-        fs.writeFileSync( 'DataSavings.json', JSON.stringify( content ) );
-        //console.log( super.data );
+        fs.writeFileSync( 'DataSavings.json', JSON.stringify( content ) );   
     }
 }
 
