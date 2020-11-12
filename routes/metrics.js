@@ -17,11 +17,12 @@ router.get( '/', (req, res) => {
     ret += "nodets3_query_connects_total " + content.query_connections_total + "<br/>";
 
     /*  User connections */
-    ret += "# HELP nodets3_user_connections Number of connected clients<br/>";
-    ret += "# TYPE nodets3_user_connections counter<br/>";
-    content.users.forEach( user => {
-        ret += 'nodets3_user_connections{uid="' + user.uid + '",name="' + user.name + '"} ' + user.connections + '<br/>';
-    });
+    if( content.users != null )
+        ret += "# HELP nodets3_user_connections Number of connected clients<br/>";
+        ret += "# TYPE nodets3_user_connections counter<br/>";
+        content.users.forEach( user => {
+            ret += 'nodets3_user_connections{uid="' + user.uid + '",name="' + user.name + '"} ' + user.connections + '<br/>';
+        });
 
     res.status( 200 ).send( ret );
 } );

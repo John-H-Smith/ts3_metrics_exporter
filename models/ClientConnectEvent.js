@@ -31,6 +31,7 @@ class ClientConnectEvent extends Event {
                     name: client.parent.propcache.clientNickname
                 };
                 content.users.push( newUser );
+                user = content.users.find( e => e.uid == client.parent.propcache.clientUniqueIdentifier );
             }
             user.connections += 1;
         }
