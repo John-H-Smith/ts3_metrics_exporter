@@ -9,7 +9,7 @@ router.get( '/', (req, res) => {
     let content = fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
     content = JSON.parse( content );
 
-    console.log( content );
+    //console.log( content );
 
     let ret = "";
     
