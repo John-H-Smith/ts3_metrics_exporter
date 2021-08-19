@@ -4,9 +4,9 @@ const fs = require( 'fs' );
 
 router.get( '/', (req, res) => {
 
-    res.setHeader('content-type', 'text/plain');
+    res.setHeader( 'content-type', 'text/plain' );
 
-    let content = fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
+    let content = fs.readFileSync( __dirname + "/../DataSavings.json", { encoding: 'utf8', flag: 'r' } );
     content = JSON.parse( content );
 
     //console.log( content );
