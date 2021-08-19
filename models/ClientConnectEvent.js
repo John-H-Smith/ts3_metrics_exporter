@@ -1,4 +1,4 @@
-const { TeamSpeakClient } = require("ts3-nodejs-library");
+const { TeamSpeakClient } = require( "ts3-nodejs-library" );
 const Event = require( "./Event" );
 const fs = require( "fs" );
 
@@ -11,7 +11,7 @@ class ClientConnectEvent extends Event {
 
     doEvent( event ) {
         let client = new TeamSpeakClient( event.client );
-        let content = fs.readFileSync( "DataSavings.json", { encoding: 'utf8', flag: 'r' } );
+        let content = fs.readFileSync( __dirname + "/../DataSavings.json", { encoding: 'utf8', flag: 'r' } );
         content = JSON.parse( content );
         /*  Query connects  */
         if( event.client.isQuery() ) {
@@ -35,7 +35,7 @@ class ClientConnectEvent extends Event {
             }
             user.connections += 1;
         }
-        fs.writeFileSync( 'DataSavings.json', JSON.stringify( content ) );   
+        fs.writeFileSync( __dirname + '/../DataSavings.json', JSON.stringify( content ) );   
     }
 }
 

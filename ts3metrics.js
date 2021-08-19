@@ -32,12 +32,12 @@ app.use( '/metrics', require( './routes/metrics' ) );
     }
 
     try {
-        let file = fs.readFileSync( "./DataSavings.json", { encoding: 'utf8', flag: 'r' } );
+        let file = fs.readFileSync( __dirname + "/DataSavings.json", { encoding: 'utf8', flag: 'r' } );
         if( file == "" )
-            fs.writeFileSync( './DataSavings.json', '{}' );
+            fs.writeFileSync( __dirname + '/DataSavings.json', '{}' );
     } catch( error ) {
         console.log( "No DataSavings.json found - creating..." );
-        fs.writeFileSync( './DataSavings.json', '{}' );
+        fs.writeFileSync( __dirname + '/DataSavings.json', '{}' );
     }
 
     // event registering
