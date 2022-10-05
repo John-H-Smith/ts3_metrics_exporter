@@ -28,7 +28,7 @@ class ClientConnectEvent extends Event {
                 let newUser = {
                     uid: client.parent.propcache.clientUniqueIdentifier,
                     connections: 0,
-                    name: client.parent.propcache.clientNicknamereplaceAll('"', "'")
+                    name: client.parent.propcache.clientNickname.replaceAll('"', "'")
                 };
                 content.users.push( newUser );
                 user = content.users.find( e => e.uid == client.parent.propcache.clientUniqueIdentifier );
