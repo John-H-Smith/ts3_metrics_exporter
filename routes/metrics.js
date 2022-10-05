@@ -22,7 +22,7 @@ router.get( '/', (req, res) => {
             ret += "# HELP nodets3_user_connections Number of connected clients\n";
             ret += "# TYPE nodets3_user_connections counter\n";
             content.users.forEach( user => {
-                ret += 'nodets3_user_connections{uid="' + user.uid + '",name=' + user.name.replaceAll('"', "'") + '} ' + user.connections;
+                ret += 'nodets3_user_connections{uid="' + user.uid + '",name=' + user.name.replaceAll('"', "'") + '} ' + user.connections + '\n';
             });
 
         }
